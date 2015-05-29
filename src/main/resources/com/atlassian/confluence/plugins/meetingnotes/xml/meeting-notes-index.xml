@@ -1,0 +1,24 @@
+<at:declarations>
+    <at:var at:name="templateLabel"/>
+    <at:var at:name="analyticsKey"/>
+    <at:var at:name="spaceKey"/>
+    <at:var at:name="blueprintKey"/>
+    <at:var at:name="indexKey"/>
+    <at:var at:name="createFromTemplateMacro"/>
+    <at:var at:name="contentReportTableMacro"/>
+</at:declarations>
+<p style="text-align: right;">
+    <at:var at:name="createFromTemplateMacro" at:rawxhtml="true"/>
+</p>
+<h2>
+    <at:i18n at:key="meeting.notes.index.task.report.heading"/>
+</h2>
+<p>
+    <at:var at:name="taskReportMacro" at:rawxhtml="true"/>
+</p>
+<h2>
+    <at:i18n at:key="meeting.notes.index.report.table.heading"/>
+</h2>
+<p>
+    <at:var at:name="contentReportTableMacro" at:rawxhtml="true"/>
+</p>

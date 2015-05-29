@@ -1,0 +1,68 @@
+<at:declarations>
+    <at:var at:name="currentDate" />
+</at:declarations>
+
+<h2><at:i18n at:key="meeting.notes.blueprint.template.date" /></h2>
+<p>
+    <at:var at:name="currentDateLozenge" at:rawxhtml="true" />
+</p>
+
+<h2><at:i18n at:key="meeting.notes.blueprint.template.attendees" /></h2>
+<ul>
+    <at:var at:name="documentOwner" at:rawxhtml="true"></at:var>
+</ul>
+
+<h2><at:i18n at:key="meeting.notes.blueprint.template.goals" /></h2>
+<ul>
+<li>
+    <ac:placeholder><at:i18n at:key="meeting.notes.blueprint.template.goals.placeholder" /></ac:placeholder>
+</li>
+</ul>
+
+<h2><at:i18n at:key="meeting.notes.blueprint.template.discussion.items" /></h2>
+<table>
+<tbody>
+    <tr>
+        <th><at:i18n at:key="meeting.notes.blueprint.template.discussion.items.time" /></th>
+        <th><at:i18n at:key="meeting.notes.blueprint.template.discussion.items.item" /></th>
+        <th><at:i18n at:key="meeting.notes.blueprint.template.discussion.items.who" /></th>
+        <th><at:i18n at:key="meeting.notes.blueprint.template.discussion.items.notes" /></th>
+    </tr>
+    <tr>
+        <td>
+            <ac:placeholder><at:i18n at:key="meeting.notes.blueprint.template.discussion.items.time.placeholder" /></ac:placeholder>
+        </td>
+        <td>
+            <ac:placeholder><at:i18n at:key="meeting.notes.blueprint.template.discussion.items.item.placeholder" /></ac:placeholder>
+        </td>
+        <td>
+            <ac:placeholder><at:i18n at:key="meeting.notes.blueprint.template.discussion.items.who.placeholder" /></ac:placeholder>
+        </td>
+        <td>
+            <ul>
+                <li>
+                    <ac:placeholder><at:i18n at:key="meeting.notes.blueprint.template.discussion.items.notes.placeholder" /></ac:placeholder>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+</tbody>
+</table>
+
+<h2><at:i18n at:key="common.blueprint.template.actions" /></h2>
+<ac:task-list>
+<ac:task>
+    <ac:task-id>1</ac:task-id>
+    <ac:task-status>incomplete</ac:task-status>
+    <ac:task-body>
+        <ac:placeholder ac:type="mention"><at:i18n at:key="common.blueprint.template.actions.placeholder" /></ac:placeholder>
+    </ac:task-body>
+</ac:task>
+</ac:task-list>
+

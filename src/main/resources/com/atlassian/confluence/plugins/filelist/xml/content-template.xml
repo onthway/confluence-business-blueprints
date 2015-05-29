@@ -1,0 +1,6 @@
+<p><at:var at:name="description" /></p>
+
+<ac:macro ac:name='attachments'>
+    <ac:parameter ac:name='upload'>true</ac:parameter>
+</ac:macro>
+

@@ -1,0 +1,14 @@
+{namespace Confluence.Blueprints.Sharelinks}
+
+/**
+ * Render labels in the result
+ *
+ * @param label a label object
+ */
+{template .labelResult}
+    {if $label.isNew}
+        {getText('sharelinks.blueprint.label.new', $label.labelName)}
+    {else}
+        {$label.labelName}
+    {/if}
+{/template}

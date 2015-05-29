@@ -1,0 +1,24 @@
+{namespace Confluence.Blueprints.SharelinksUrlMacro}
+/**
+ * Render a bookmarklet link
+ * @param bookmarkletActionURL
+ */
+{template .bookmarkletLink}
+    <a class="aui-button sharelinks-urlmacro-button"
+        href="{call .bookmarkletScript}{param bookmarkletActionURL: $bookmarkletActionURL /}{/call}">
+        <span>{getText('urlmacro.link.title')}</span>
+    </a>
+{/template}
+
+/**
+ * Render a bookmarklet script
+ * @param bookmarkletActionURL
+ */
+{template .bookmarkletScript}
+    javascript:(function(){lb}var screenWidth=screen.width,screenHeight=screen.height,popupWidth=640,popupHeight=580,popupLeft=0,popupTop=0;
+                              if(screenWidth>popupWidth){lb}popupLeft=Math.round((screenWidth/2)-(popupWidth/2));{rb}
+                              if(screenHeight>popupHeight){lb}popupTop=Math.round((screenHeight/2)-(popupHeight/2));{rb}
+                              window.open('{$bookmarkletActionURL|noAutoescape}?bookmarkedURL='+encodeURIComponent(window.location.href),
+                                          '','left='+popupLeft+',top='+popupTop+',width='+popupWidth+',height='+popupHeight+',personalbar=0,toolbar=0,scrollbars=1,resizable=1');
+                          {rb}());
+{/template}

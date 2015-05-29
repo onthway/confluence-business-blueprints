@@ -1,0 +1,35 @@
+<!--
+    Sharelinks Bookmarklet master decorator
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+#requireResource("confluence.web.resources:master-styles")
+#requireResource("com.atlassian.auiplugin:aui-css")
+#requireResource("com.atlassian.confluence.plugins.confluence-business-blueprints:sharelinksbookmarklet-resources")
+## set parameters for render Confluence header
+#set ($templateParameters = {
+    "headerLogoImageUrl": "${webResourceHelper.getStaticResourcePrefix()}/images/logo/confluence-logo.png",
+    "headerLogoText": $settingsManager.globalSettings.siteTitle,
+    "headerLink": "${req.contextPath}/",
+    "headerText": $headerText,
+    "logo": "confluence"
+})
+
+<html>
+<head>
+    <title>$title - #siteTitle()</title>
+    #standardHeader()
+</head>
+<body id="com-atlassian-confluence" class="popup-window aui-theme-default aui-layout">
+    <div id="header">
+        <header id="header" role="banner">
+            $soyTemplateRendererHelper.getRenderedTemplateHtml("com.atlassian.auiplugin:aui-experimental-soy-templates", "aui.page.header.soy", $templateParameters)
+            <br class="clear">
+        </header>
+    </div>
+    <div id="main-bookmarklet">
+        <div id="content">
+            $body
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<ac:macro ac:name="details">
+	<ac:parameter ac:name="label"><at:var at:name="templateLabel"/></ac:parameter>
+	<ac:rich-text-body>
+        <table>
+            <tbody>
+                <tr>
+                    <th><at:i18n at:key="decisions.template.status.heading" /></th>
+                    <td>
+                        <at:var at:name="status" at:rawxhtml="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th><at:i18n at:key="decisions.template.stakeholders.heading" /></th>
+                    <td>
+                        <at:var at:name="mentions" at:rawxhtml="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th><at:i18n at:key="decisions.template.outcomes.heading" /></th>
+                    <td>
+                        <at:var at:name="final-decision"/>
+                        <at:var at:name="final-decision-placeholder" at:rawxhtml="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th><at:i18n at:key="decisions.template.duedate.heading" /></th>
+                    <td>
+                        <at:var at:name="due-date" at:rawxhtml="true"/>
+                        <at:var at:name="due-date-placeholder" at:rawxhtml="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th><at:i18n at:key="decisions.template.owner.heading" /></th>
+                    <td>
+                        <at:var at:name="owner" at:rawxhtml="true"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ac:rich-text-body>
+</ac:macro>
+<h2><at:i18n at:key="decisions.template.background.heading" /></h2>
+<at:var at:name="background"/>
+<at:var at:name="background-placeholder" at:rawxhtml="true"/>
+
+<h2><at:i18n at:key="common.blueprint.template.actions" /></h2>
+<ac:task-list>
+<ac:task>
+    <ac:task-id>1</ac:task-id>
+    <ac:task-status>incomplete</ac:task-status>
+    <ac:task-body>
+        <ac:placeholder ac:type="mention"><at:i18n at:key="common.blueprint.template.actions.placeholder" /></ac:placeholder>
+    </ac:task-body>
+</ac:task>
+</ac:task-list>

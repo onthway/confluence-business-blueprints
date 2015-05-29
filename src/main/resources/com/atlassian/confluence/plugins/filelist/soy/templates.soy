@@ -1,0 +1,32 @@
+{namespace Confluence.Templates.FileList}
+
+/**
+ * Dialog form template
+ */
+{template .dialogForm}
+<form action="#" method="post" id="file-list-form" class="aui">
+    <fieldset>
+        <div class="field-group">
+            <label for="file-list-page-title">{getText('file.list.blueprint.wizard.form.label.name')}
+                <span class="aui-icon icon-required"> required</span>
+            </label>
+            <input id="file-list-page-title" class="text long-field" type="text" name="title"
+                placeholder="{getText('file.list.blueprint.wizard.form.label.name.placeholder')}" maxlength="255">
+            <div class="error"></div>
+        </div>
+        <div class="field-group">
+            <label for="file-list-page-description">
+                {getText('file.list.blueprint.wizard.form.label.description')}
+            </label>
+            <textarea id="file-list-page-description" class="textarea long-field" name="description" rows="6"
+            placeholder="{getText('file.list.blueprint.wizard.form.label.description.placeholder')}"></textarea>
+        </div>
+        <div class="field-group">
+            <label for="file-list-restrictions">{getText('file.list.blueprint.wizard.form.label.restrictions')}</label>
+            <input id="file-list-restrictions" class="text long-field autocomplete-multiuser" type="text"
+                name="viewPermissionsUsers"
+                placeholder="{getText('file.list.blueprint.wizard.form.label.restrictions.placeholder')}">
+        </div>
+    </fieldset>
+</form>
+{/template}

@@ -1,0 +1,82 @@
+{namespace Confluence.Blueprints.Decisions}
+
+/**
+ * Dialog form template
+ */
+{template .dialogForm}
+<form action="#" method="post" id="decisions-form" class="aui">
+    <fieldset>
+        <div class="field-group">
+            <label for="decisions-status">{getText('decisions.blueprint.wizard.form.label.status')}</label>
+            <select class="select long-field" id="decisions-status" name="status">
+                <option value="GREY">{getText('decisions.blueprint.wizard.form.status.open')}</option>
+                <option value="YELLOW">{getText('decisions.blueprint.wizard.form.status.progress')}</option>
+                <option value="GREEN">{getText('decisions.blueprint.wizard.form.status.closed')}</option>
+            </select>
+        </div>
+        <div class="field-group">
+            <label for="decisions-page-title">{getText('decisions.blueprint.wizard.form.label.name')}<span class="aui-icon icon-required"> required</span></label>
+            <input id="decisions-page-title" class="text long-field" type="text" name="title" placeholder="{getText('decisions.blueprint.wizard.form.label.name.placeholder')}" maxlength="255">
+            <div class="error"></div>
+        </div>
+        <div class="field-group">
+            <label for="decisions-owner">{getText('decisions.blueprint.wizard.form.label.owner')}</label>
+            <input id="decisions-owner" type="text" class="text long-field autocomplete-multiuser" name="owner" placeholder="{getText('decisions.blueprint.wizard.form.owner.placeholder')}"
+            data-autofill-user="true">
+        </div>
+        <div class="field-group">
+            <label for="decisions-stakeholders">{getText('decisions.blueprint.wizard.form.label.stakeholders')}</label>
+            <input id="decisions-stakeholders" class="text long-field autocomplete-multiuser" type="text" name="stakeholders" placeholder="{getText('decisions.blueprint.wizard.form.label.stakeholders.placeholder')}">
+        </div>
+        <div class="field-group">
+            <label for="decisions-due-date">{getText('decisions.blueprint.wizard.form.label.duedate')}</label>
+            <input id="decisions-due-date" class="datepicker-field date-field text" type="text" name="due-date" size="10" autocomplete="off">
+        </div>
+        <div class="field-group">
+            <label for="decisions-background">{getText('decisions.blueprint.wizard.form.label.background')}</label>
+            <textarea id="decisions-background" class="textarea long-field" rows="3" name="background" placeholder="{getText('decisions.blueprint.wizard.form.background.placeholder')}"></textarea>
+        </div>
+        <div class="field-group">
+            <label for="decisions-final-decision">{getText('decisions.blueprint.wizard.form.label.final.decision')}</label>
+            <textarea id="decisions-final-decision" class="textarea long-field" rows="3" name="final-decision" placeholder="{getText('decisions.blueprint.wizard.form.final.decision.placeholder')}"></textarea>
+        </div>
+    </fieldset>
+</form>
+{/template}
+
+/**
+* @param names Usernames to be mentioned
+*/
+{template .mentionXml}
+    {foreach $name in $names}
+        <ac:link><ri:user ri:username="{$name}" /></ac:link>&nbsp;
+    {/foreach}
+{/template}
+
+/**
+* Placeholder for mentions
+* @param placeholderText The text to render in the placeholder
+*/
+{template .mentionsPlaceholder}
+    <ac:placeholder ac:type="mention">{$placeholderText}</ac:placeholder>
+{/template}
+
+/**
+* Generic placeholder
+* @param placeholderText The text to render in the placeholder
+*/
+{template .placeholder}
+    <ac:placeholder>{$placeholderText}</ac:placeholder>
+{/template}
+
+/**
+* Placeholder for status
+* @param status decision's status
+* @param statusColour colour of decision status
+*/
+{template .statusTemplate}
+    <ac:macro ac:name="status">
+        <ac:parameter ac:name="title">{$status}</ac:parameter>
+        <ac:parameter ac:name="colour">{$statusColour}</ac:parameter>
+    </ac:macro>
+{/template}

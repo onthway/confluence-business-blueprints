@@ -1,0 +1,8 @@
+/* Blueprint blank experience macro */
+.columnLayout.threeColumns .blueprint-blank-experience,
+.columnLayout .cell.aside .blueprint-blank-experience,
+.columnLayout.three-equal .blueprint-blank-experience,
+.columnLayout.sidebars .blueprint-blank-experience {
+    background: none;
+    padding: 20px;
+}

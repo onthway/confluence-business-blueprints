@@ -1,0 +1,372 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+    </plugin-info>
+
+    <!-- Common descriptors -->
+    <component-import key="localeManager" interface="com.atlassian.confluence.languages.LocaleManager"/>
+    <component-import key="i18nBeanFactory" interface="com.atlassian.confluence.util.i18n.I18NBeanFactory"/>
+    <component-import key="sharePageService" interface="com.atlassian.confluence.plugins.sharepage.api.SharePageService"/>
+    <component-import key="contentBlueprintManager" interface="com.atlassian.confluence.plugins.createcontent.ContentBlueprintManager"/>
+    <component-import key="blueprintsTemplateHelper" interface="com.atlassian.confluence.plugins.createcontent.TemplateRendererHelper"/>
+
+    <component key="contextProviderHelper" id="contextProviderHelper" class="com.atlassian.confluence.plugins.BusinessBlueprintsContextProviderHelper" />
+
+    <!-- Common index page -->
+    <web-resource key="common-template-resources" name="Common Templates Resources">
+        <transformation extension="js">
+            <transformer key="jsI18n"/>
+        </transformation>
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+	    <resource type="download" name="common-style.css" location="com/atlassian/confluence/plugins/blueprint/common/css/common-style.css" />
+        <resource type="download" name="common-templates.js" location="com/atlassian/confluence/plugins/blueprint/common/soy/common-templates.soy" />
+        <context>atl.general</context>
+        <context>atl.admin</context>
+    </web-resource>
+
+    <!-- Common Resources -->
+    <resource name="common-i18n" type="i18n" location="com/atlassian/confluence/plugins/common-i18n"/>
+
+    <!-- File List descriptors -->
+    <web-item key="file-list-item" i18n-name-key="file.list.blueprint.name" section="system.create.dialog/content">
+        <description key="file.list.blueprint.description"/>
+        <styleClass>file-list-blueprint-icon large</styleClass>
+        <param name="blueprintKey" value="file-list-blueprint"/>
+    </web-item>
+
+    <blueprint key="file-list-blueprint" name="File List Blueprint" i18n-name-key="file.list.blueprint.title"
+            create-result="view"
+            index-key="file-list"
+            i18n-index-title-key="file.list.blueprint.index.page.title">
+        <content-template ref="file-list-page"/>
+        <dialog-wizard key="file-list-blueprint-wizard">
+            <dialog-page id="file-list-page1" template-key="Confluence.Templates.FileList.dialogForm"
+                         title-key="file.list.blueprint.wizard.title"
+                         description-header-link-key="file.list.blueprint.wizard.about.heading.link"
+                         description-header-key="file.list.blueprint.wizard.about.heading"
+                         description-content-key="file.list.blueprint.wizard.about.description"/>
+        </dialog-wizard>
+    </blueprint>
+
+    <content-template key="file-list-page"
+                      i18n-name-key="file.list.blueprint.content.template.name">
+        <description key="file.list.blueprint.content.template.description"/>
+        <resource name="template" type="download" location="com/atlassian/confluence/plugins/filelist/xml/content-template.xml"/>
+    </content-template>
+
+    <resource name="file-list-i18n" type="i18n" location="com/atlassian/confluence/plugins/filelist/file-list-i18n"/>
+
+    <web-resource key="file-list-resources" name="File List Resources">
+        <transformation extension="js">
+            <transformer key="jsI18n"/>
+        </transformation>
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+
+        <resource type="download" name="main.css" location="com/atlassian/confluence/plugins/filelist/css/main.css" />
+        <resource type="download" name="templates-soy.js" location="com/atlassian/confluence/plugins/filelist/soy/templates.soy" />
+        <resource type="download" name="create-file-list-listener.js" location="com/atlassian/confluence/plugins/filelist/js/create-file-list-listener.js" />
+
+        <dependency>com.atlassian.confluence.plugins.confluence-create-content-plugin:blueprint-resources</dependency>
+        <context>atl.general</context>
+        <context>atl.admin</context>
+    </web-resource>
+
+    <!-- Meeting Note descriptors -->
+    <!--
+        NOTE - Meeting Note used to live in another repo. To see the history / clone an old copy
+        go to https://bitbucket.org/atlassian/confluence-meeting-minutes-plugin
+    -->
+    <resource name="meeting-notes-i18n" type="i18n" location="com/atlassian/confluence/plugins/meetingnotes/meeting-notes-i18n"/>
+
+    <web-item key="meeting-notes-item" i18n-name-key="meeting.notes.blueprint.name" section="system.create.dialog/content">
+        <description key="meeting.notes.blueprint.description"/>
+        <styleClass>meeting-notes-blueprint-icon large</styleClass>
+        <param name="blueprintKey" value="meeting-notes-blueprint"/>
+    </web-item>
+
+    <blueprint key="meeting-notes-blueprint" name="Meeting Notes Blueprint" i18n-name-key="meeting.notes.blueprint.title"
+            index-key="meeting-notes"
+            content-template-key="meeting-notes-page"
+            how-to-use-template="Confluence.Blueprints.Meeting.Notes.howTo"
+            index-template-key="meeting-notes-index"
+            i18n-index-title-key="meeting.notes.blueprint.content.template.name"/>
+
+    <content-template key="meeting-notes-page" i18n-name-key="meeting.notes.blueprint.content.template.name">
+        <description key="meeting.notes.blueprint.content.template.description"/>
+        <resource name="template" type="download" location="com/atlassian/confluence/plugins/meetingnotes/xml/meeting-notes.xml"/>
+        <context-provider class="com.atlassian.confluence.plugins.meetingnotes.MeetingNotesContextProvider"/>
+    </content-template>
+
+    <content-template key="meeting-notes-index" i18n-name-key="meeting.notes.blueprint.index.template.name">
+        <resource name="template" type="download" location="com/atlassian/confluence/plugins/meetingnotes/xml/meeting-notes-index.xml"/>
+        <context-provider class="com.atlassian.confluence.plugins.meetingnotes.MeetingNotesIndexContextProvider"/>
+    </content-template>
+
+    <web-resource key="meeting-notes-resources" name="Meeting Notes Resources">
+        <transformation extension="js">
+            <transformer key="jsI18n"/>
+        </transformation>
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+        <resource type="download" name="main.css" location="com/atlassian/confluence/plugins/meetingnotes/css/main.css" />
+        <resource type="download" name="how-to.js" location="com/atlassian/confluence/plugins/meetingnotes/soy/how-to.soy" />
+        <resource type="download" name="user-mention.js" location="com/atlassian/confluence/plugins/meetingnotes/soy/user-mention.soy" />
+        <context>atl.general</context>
+        <context>atl.admin</context>
+    </web-resource>
+
+    <!-- Decisions descriptors -->
+
+    <web-item key='decisions-blueprint-item' i18n-name-key='decisions.blueprint.name'
+              section='system.create.dialog/content'>
+        <description key='decisions.blueprint.description'/>
+        <styleClass>decisions-blueprint-icon large</styleClass>
+        <param name='blueprintKey' value='decisions-blueprint'/>
+    </web-item>
+
+    <resource name="decisions-i18n" type="i18n" location="com/atlassian/confluence/plugins/decisions/decisions-i18n"/>
+
+    <blueprint key="decisions-blueprint" name="Decisions Blueprint" i18n-name-key='decisions.blueprint.title'
+            index-key="decisions"
+            index-template-key="decisions-index-page"
+            i18n-index-title-key="decisions.blueprint.index.page.title">
+
+            <content-template ref="decisions-page"/>
+            <dialog-wizard key="decision-blueprint-wizard">
+                <dialog-page id="decisions-page1" template-key="Confluence.Blueprints.Decisions.dialogForm"
+                         title-key="decisions.blueprint.wizard.title"
+                         description-header-link-key="decisions.blueprint.wizard.about.heading.link"
+                         description-header-key="decisions.blueprint.wizard.about.heading"
+                         description-content-key="decisions.blueprint.wizard.about.description"/>
+            </dialog-wizard>
+    </blueprint>
+
+    <content-template key="decisions-page"
+                      i18n-name-key="decisions.blueprint.name">
+        <description key="decisions.blueprint.content.template.description"/>
+        <resource name="template" type="download" location="com/atlassian/confluence/plugins/decisions/xml/decisions-template.xml"/>
+        <context-provider class="com.atlassian.confluence.plugins.decisions.DecisionsContextProvider"/>
+    </content-template>
+
+    <content-template key="decisions-index-page"
+                      i18n-name-key="decisions.blueprint.index.page.title">
+        <resource name="template" type="download" location="com/atlassian/confluence/plugins/blueprint/common/xml/index-page.xml"/>
+        <context-provider class="com.atlassian.confluence.plugins.blueprint.DefaultDetailSummaryIndexContextProvider">
+            <param name="i18nKeyPrefix" value="decisions.template.index"/>
+        </context-provider>
+    </content-template>
+
+     <web-resource key="decisions-resources" name="Decisions Resources">
+        <transformation extension="js">
+            <transformer key="jsI18n"/>
+        </transformation>
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+
+         <resource type="download" name="main.css" location="com/atlassian/confluence/plugins/decisions/css/main.css" />
+         <resource type="download" name="jquery-ui-datepicker.css" location="com/atlassian/confluence/plugins/decisions/css/jquery.ui.datepicker.css" />
+         <resource type="download" name="jquery-ui-theme.css" location="com/atlassian/confluence/plugins/decisions/css/jquery.ui.theme.css" />
+         <resource type="download" name="decisions-templates.js" location="com/atlassian/confluence/plugins/decisions/soy/decisions-templates.soy" />
+         <resource type="download" name="create-decisions-listener.js" location="com/atlassian/confluence/plugins/decisions/js/create-decisions-listener.js" />
+
+        <context>atl.general</context>
+        <context>atl.admin</context>
+    </web-resource>
+
+
+    <!-- Sharelinks descriptors -->
+
+    <web-item key='sharelinks-blueprint-item' i18n-name-key='sharelinks.blueprint.name'
+              section='system.create.dialog/content'>
+        <description key='sharelinks.blueprint.description'/>
+        <styleClass>sharelinks-blueprint-icon large</styleClass>
+        <param name='blueprintKey' value='sharelinks-blueprint'/>
+    </web-item>
+
+    <resource name="sharelinks-i18n" type="i18n" location="com/atlassian/confluence/plugins/sharelinks/sharelinks-i18n"/>
+
+    <blueprint key="sharelinks-blueprint" name="Share Links Blueprint" i18n-name-key='sharelinks.blueprint.title'
+            create-result="view"
+            index-key="shared-links"
+            index-template-key="sharelinks-index-page"
+            i18n-index-title-key="sharelinks.blueprint.index.page.title">
+
+            <content-template ref="sharelinks-page"/>
+            <dialog-wizard key="sharelinks-blueprint-wizard">
+                <dialog-page id="sharelinks-page1" template-key="Confluence.Blueprints.Sharelinks.dialogForm"
+                         title-key="sharelinks.blueprint.wizard.title"
+                         description-header-link-key="sharelinks.blueprint.wizard.about.heading.link"
+                         description-header-key="sharelinks.blueprint.wizard.about.heading"
+                         description-content-key="sharelinks.blueprint.wizard.about.description"/>
+            </dialog-wizard>
+    </blueprint>
+
+    <content-template key="sharelinks-page"
+                      i18n-name-key="sharelinks.blueprint.name">
+        <description key="sharelinks.blueprint.content.template.description"/>
+        <resource name="template" type="download" location="com/atlassian/confluence/plugins/sharelinks/xml/sharelinks-template.xml"/>
+        <context-provider class="com.atlassian.confluence.plugins.sharelinks.SharelinksContextProvider"/>
+    </content-template>
+
+    <content-template key="sharelinks-index-page"
+                      i18n-name-key="sharelinks.blueprint.index.page.title">
+        <resource name="template" type="download" location="com/atlassian/confluence/plugins/blueprint/common/xml/index-page.xml"/>
+        <context-provider class="com.atlassian.confluence.plugins.sharelinks.SharelinksIndexContextProvider">
+            <param name="i18nKeyPrefix" value="sharelinks.template.index"/>
+        </context-provider>
+    </content-template>
+
+     <web-resource key="sharelinks-resources" name="Sharelinks Resources">
+        <transformation extension="js">
+            <transformer key="jsI18n"/>
+        </transformation>
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+
+        <resource type="download" name="main.css" location="com/atlassian/confluence/plugins/sharelinks/css/main.css" />
+        <resource type="download" name="sharelinks-templates.js" location="com/atlassian/confluence/plugins/sharelinks/soy/sharelinks-templates.soy" />
+        <resource type="download" name="sharelinks-creation-wizard.js" location="com/atlassian/confluence/plugins/sharelinks/js/sharelinks-creation-wizard.js" />
+        <resource type="download" name="sharelinks-analytics.js" location="com/atlassian/confluence/plugins/sharelinks/js/sharelinks-analytics.js" />
+        <resource type="download" name="default-sharelinks-favicon-16.png" location="com/atlassian/confluence/plugins/sharelinks/images/default-sharelinks-favicon-16.png" />
+
+        <resource type="download" name="sharelinks-label-templates.js" location="com/atlassian/confluence/plugins/sharelinks/soy/sharelinks-label.soy" />
+        <resource type="download" name="sharelinks-label.js" location="com/atlassian/confluence/plugins/sharelinks/js/sharelinks-label.js" />
+
+        <dependency>com.atlassian.confluence.plugins.confluence-ui-components:label-picker</dependency>
+        <dependency>com.atlassian.confluence.plugins.confluence-business-blueprints:sharelinks-urlmacro-resources</dependency>
+
+        <context>atl.general</context>
+        <context>atl.admin</context>
+    </web-resource>
+
+    <rest key="sharelinks-service" path="/sharelinks" version="1.0">
+        <description>Provides services get link meta data</description>
+    </rest>
+
+    <component key="sharelinks-blueprint-listener" class="com.atlassian.confluence.plugins.sharelinks.listener.SharelinksBlueprintListener" />
+    <component key="sharelinks-blueprint-widget-connector-support" class="com.atlassian.confluence.plugins.sharelinks.widgetconnector.WidgetConnectorSupportImpl" />
+
+    <component key="linkMetadataExtractor" id="linkMetadataExtractor" class="com.atlassian.confluence.plugins.sharelinks.metaextractor.MasterLinkMetaDataExtractor"
+          interface="com.atlassian.confluence.plugins.sharelinks.LinkMetaDataExtractor">
+        <constructor-arg ref="httpRetrievalService"/>
+    </component>
+
+
+    <!-- any link autoconvert -->
+
+    <web-resource key="autoconvert-any-link" name="Autoconvert any link to a title">
+        <description>Fetch a title of the page referenced by url and use it as a link</description>
+        <resource type="download" name="arbitary-link-autoconvert.js" location="com/atlassian/confluence/plugins/sharelinks/js/arbitary-link-autoconvert.js"/>
+        <!-- This will ensure the resource is loaded after autoconvert, and only if autoconvert is enabled. -->
+        <dependency>com.atlassian.confluence.plugins.confluence-paste:autoconvert-core</dependency>
+        <context>editor</context>
+        <condition class="com.atlassian.confluence.plugin.descriptor.web.urlreadingconditions.DarkFeatureEnabledUrlReadingCondition">
+            <param name="key">any-link-autoconvert</param>
+        </condition>
+    </web-resource>
+
+    <!-- Sharelinks Bookmarklet descriptors -->
+
+    <decorator name="Sharelinks Bookmarklet decorator" key="sharelinksbookmarklet-decorator"
+        page="com/atlassian/confluence/plugins/sharelinksbookmarklet/decorators/sharelinksbookmarklet.vmd">
+        <description>Sharelinks Bookmarklet decorator</description>
+        <pattern>/plugins/sharelinksbookmarklet/*</pattern>
+    </decorator>
+
+    <xwork key="sharelinksbookmarklet-actions" name="Sharelinks Bookmarklet xwork actions">
+        <package name="sharelinksbookmarklet" extends="default"
+            namespace="/plugins/sharelinksbookmarklet">
+            <default-interceptor-ref name="validatingStack" />
+            <action name="bookmarklet"
+                class="com.atlassian.confluence.plugins.sharelinksbookmarklet.actions.BookmarkletAction">
+                <result name="success" type="velocity">/com/atlassian/confluence/plugins/sharelinksbookmarklet/velocity/sharelinksbookmarklet-page-template.vm</result>
+                <result name="none" type="redirect">/pages/pagenotfound.action</result>
+            </action>
+        </package>
+    </xwork>
+
+    <web-resource key="sharelinksbookmarklet-resources" name="Sharelinks Bookmarklet resources">
+        <transformation extension="js">
+            <transformer key="jsI18n" />
+        </transformation>
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+
+        <resource type="download" name="sharelinksbookmarklet.css"
+            location="com/atlassian/confluence/plugins/sharelinksbookmarklet/css/sharelinksbookmarklet.css" />
+        <resource type="download" name="sharelinksbookmarklet-templates.js"
+            location="com/atlassian/confluence/plugins/sharelinksbookmarklet/soy/sharelinksbookmarklet-templates.soy" />
+        <resource type="download" name="sharelinksbookmarklet.js"
+            location="com/atlassian/confluence/plugins/sharelinksbookmarklet/js/sharelinksbookmarklet.js" />
+
+        <resource type="download" name="sharelinks-label-templates.js"
+            location="com/atlassian/confluence/plugins/sharelinks/soy/sharelinks-label.soy" />
+        <resource type="download" name="sharelinks-label.js"
+            location="com/atlassian/confluence/plugins/sharelinks/js/sharelinks-label.js" />
+
+        <dependency>com.atlassian.confluence.plugins.confluence-ui-components:label-picker</dependency>
+
+    </web-resource>
+
+    <!-- Sharelinks macro descriptors -->
+
+    <xhtml-macro key="sharelinks-urlmacro" name="sharelinks-urlmacro" class="com.atlassian.confluence.plugins.sharelinks.URLMacro">
+        <description key="sharelinks.url.macro.description"/>
+        <parameters></parameters>
+    </xhtml-macro>
+    
+    <web-resource key="sharelinks-urlmacro-resources" name="URL macro resources">
+        <transformation extension="js">
+            <transformer key="jsI18n" />
+        </transformation>
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+        
+        <resource type="download" name="sharelinks-urlmacro.css"
+            location="com/atlassian/confluence/plugins/sharelinksurlmacro/css/sharelinks-urlmacro.css" />
+        <resource type="download" name="sharelinks-urlmacro-templates.js"
+            location="com/atlassian/confluence/plugins/sharelinksurlmacro/soy/sharelinks-urlmacro-templates.soy" />
+        <resource type="download" name="sharelinks-urlmacro.js"
+            location="com/atlassian/confluence/plugins/sharelinksurlmacro/js/sharelinks-urlmacro.js" />
+        <resource name="sharelinks-urlmacro-i18n" type="i18n"
+            location="com/atlassian/confluence/plugins/sharelinksurlmacro/sharelinks-urlmacro-i18n" />
+
+        <context>viewcontent</context>
+    </web-resource>
+
+    <web-resource key="sharelinks-urlmacro-editor-resources" name="URL macro resources">
+        <resource type="download" name="sharelinks-urlmacro-placeholder.png"
+                  location="/com/atlassian/confluence/plugins/sharelinksurlmacro/images/sharelinks-urlmacro-placeholder.png">
+            <param name="content-type" value="image/png"/>
+        </resource>
+        <resource type="download" name="sharelinks-urlmacro.css"
+                  location="com/atlassian/confluence/plugins/sharelinksurlmacro/css/sharelinks-urlmacro-editor.css" />
+
+        <context>editor-content</context>
+    </web-resource>
+</atlassian-plugin>

@@ -1,0 +1,15 @@
+<at:declarations>
+    <at:var at:name="templateLabel"/>
+    <at:var at:name="spaceKey"/>
+    <at:var at:name="blueprintKey"/>
+    <at:var at:name="pageFromTemplateTitle"/>
+    <at:var at:name="introParagraph"/>
+</at:declarations>
+
+<p style="text-align: right;">
+    <at:var at:name="createFromTemplateMacro" at:rawxhtml="true"/>
+</p>
+
+<at:var at:name="introParagraph" at:rawxhtml="true" />
+
+<at:var at:name="detailsSummaryMacro" at:rawxhtml="true"/>

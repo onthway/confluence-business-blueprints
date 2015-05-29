@@ -1,0 +1,94 @@
+#requireResource("confluence.web.resources:aui-forms")
+#requireResource("com.atlassian.confluence.plugins.confluence-scriptsfinished-plugin:scriptsfinished")
+
+#macro (renderOptGroup $spaces $label)
+    #if ($spaces.size() > 0)
+    <optgroup label="$label">
+        #foreach ($space in $spaces)
+            <option value="$space.key">$generalUtil.shortenString($space.name, 35)</option>
+        #end
+    </optgroup>
+    #end
+#end
+
+#macro (warningBox $message)
+    <div class="aui-message warning">
+        <span class="aui-icon icon-warning"></span>
+        $message
+    </div>
+#end
+
+<html>
+    <head>
+        <title>$i18n.getText("bookmarklet.page.title")</title>
+        <meta name="decorator" content="sharelinksbookmarklet"/>
+    </head>
+    <body>
+        <div id="bookmarklet-container">
+            <div class="bookmarklet-section">
+                <h2>$i18n.getText("bookmarklet.header.title")</h2>
+
+                #if ($availableGlobalSpaces.size() > 0 || $personalSpaceKey)
+                #if (!$remoteUser)
+                    #warningBox($action.getText("sharelinks.bookmarklet.anonymous.message", [$loginURL]))
+                #end
+                <div class="bookmarklet-content">
+                    <div class="bookmarklet-action-messages">
+                    </div>
+                    <form action="#" method="post" id="bookmarklet-form" class="aui">
+                        <fieldset>
+                            <div class="field-group bookmarklet-field-group">
+                                <label for="bookmarklet-url">$i18n.getText("sharelinks.blueprint.wizard.form.label.url")<span class="aui-icon icon-required"></span> </label>
+                                <input id="bookmarklet-url" class="text bookmarklet-text" type="text" placeholder="$i18n.getText('sharelinks.blueprint.wizard.form.label.url.placeholder')" #if ($stringUtils.isNotBlank($action.bookmarkedURL)) value="$action.bookmarkedURL" #end/> <span id="spinnyUrl"></span>
+                                <div class="error"></div>
+                            </div>
+                            <div class="field-group bookmarklet-field-group">
+                                <label for="bookmarklet-title">$i18n.getText("sharelinks.blueprint.wizard.form.label.name")<span class="aui-icon icon-required"> </span></label>
+                                <input id="bookmarklet-title" class="text bookmarklet-text" type="text" name="title" title="title" placeholder="$i18n.getText('sharelinks.blueprint.wizard.form.label.name.placeholder')" maxlength="255">
+                                <div class="error"></div>
+                            </div>
+                            <div class="field-group bookmarklet-field-group">
+                                <label for="space-select">$i18n.getText("bookmarklet.form.label.space")<span class="aui-icon icon-required"> </span></label>
+                                <select id="space-select" name="spaceKey" class="select">
+                                    #if ($stringUtils.isNotBlank($personalSpaceKey))
+                                        <option value="$personalSpaceKey">$i18n.getText("bookmarklet.space.personal.name")</option>
+                                    #end
+                                    #renderOptGroup($favouriteSpaces $i18n.getText("bookmarklet.space.favourite.spaces"))
+                                    #renderOptGroup($availableGlobalSpaces $i18n.getText("bookmarklet.space.global.spaces"))
+                                </select>
+                                <div class="error"></div>
+                            </div>
+                            <div class="field-group bookmarklet-field-group">
+                                <label for="bookmarklet-label">$i18n.getText("sharelinks.blueprint.wizard.form.label.label")</label>
+                                <input id="bookmarklet-label" class="text bookmarklet-text select2-input" type="text" name="label"
+                                                placeholder="$i18n.getText('sharelinks.blueprint.wizard.form.label.label.placeholder')" />
+                            </div>	                        
+                            <div class="field-group bookmarklet-field-group">
+                                <label for="bookmarklet-sharewith">$i18n.getText("sharelinks.blueprint.wizard.form.label.sharewith")</label>
+                                <input id="bookmarklet-sharewith" class="text bookmarklet-text autocomplete-multiuser" type="text" name="sharewith" placeholder="$i18n.getText('sharelinks.blueprint.wizard.form.label.sharewith.placeholder')"/>
+                            </div>
+                            <div class="field-group bookmarklet-field-group">
+                                <label for="bookmarklet-comment">$i18n.getText("sharelinks.blueprint.wizard.form.label.comment")</label>
+                                <textarea id="bookmarklet-comment" class="textarea bookmarklet-text" rows="4" type="text" name="comment" placeholder="$i18n.getText('sharelinks.blueprint.wizard.form.label.comment.placeholder')"></textarea>
+                            </div>
+                            <div class="field-group bookmarklet-field-group form-buttons bookmarklet-form-buttons">
+                                <input id="bookmarklet-submit" class="aui-button aui-style aui-button-primary" type="submit" 
+                                    value="$i18n.getText('bookmarklet.form.label.submit')"/>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                #else
+                    #if ($remoteUser)
+                        #warningBox($action.getText("sharelinks.bookmarklet.nospace.message.loggedin", ["${req.contextPath}/wiki/contactadministrators.action"]))
+                    #else
+                        #warningBox($action.getText("sharelinks.bookmarklet.nospace.message.anonymous", [$loginURL]))
+                    #end
+                    <div class="bookmarklet-close">
+                        <button class="aui-button aui-style aui-button-primary">$action.getText("bookmarklet.page.close")</button>
+                    </div>
+                #end
+            </div>
+        </div>
+    </body>
+</html>

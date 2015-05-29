@@ -1,0 +1,41 @@
+{namespace Confluence.Blueprints.Common.Index}
+
+/**
+* @param label The label of the pages to collect.
+* @param spaces The space keys of the spaces to collect pages from.
+* @param firstcolumn The heading for the first column in the table
+* @param headings Comma-separated list of columns to display in the table (in order)
+* @param blankTitle The title shown when there is no page to display
+* @param blankDescription The description shown when there is no page to display
+* @param contentBlueprintId The UUID of blueprint module associated with create button
+* @param blueprintModuleCompleteKey The key of the blueprint associated with create button
+* @param createButtonLabel The label to display on the create button
+*/
+{template .detailsSummaryMacro}
+    <ac:macro ac:name="detailssummary">
+        <ac:parameter ac:name="label">{$label}</ac:parameter>
+        <ac:parameter ac:name="spaces">{$spaces}</ac:parameter>
+        <ac:parameter ac:name="firstcolumn">{$firstcolumn}</ac:parameter>
+        <ac:parameter ac:name="headings">{$headings}</ac:parameter>
+        <ac:parameter ac:name="blankTitle">{$blankTitle}</ac:parameter>
+        <ac:parameter ac:name="blankDescription">{$blankDescription}</ac:parameter>
+        <ac:parameter ac:name="contentBlueprintId">{$contentBlueprintId}</ac:parameter>
+        <ac:parameter ac:name="blueprintModuleCompleteKey">{$blueprintModuleCompleteKey}</ac:parameter>
+        <ac:parameter ac:name="createButtonLabel">{$createButtonLabel}</ac:parameter>
+    </ac:macro>
+{/template}
+
+/**
+* @param moduleKey The module key of the template to create from.
+* @param spaceKey The space keys of the space to create the page in.
+* @param buttonLabel The text to appear on the button.
+* @param templateName The name of the template to create from.
+*/
+{template .createFromTemplateMacro}
+    <ac:macro ac:name="create-from-template">
+        <ac:parameter ac:name="blueprintModuleCompleteKey">{$moduleKey}</ac:parameter>
+        <ac:parameter ac:name="buttonLabel">{$buttonLabel}</ac:parameter>
+        <ac:parameter ac:name="spaceKey">{$spaceKey}</ac:parameter>
+        <ac:parameter ac:name="templateName">{$templateName}</ac:parameter>
+    </ac:macro>
+{/template}

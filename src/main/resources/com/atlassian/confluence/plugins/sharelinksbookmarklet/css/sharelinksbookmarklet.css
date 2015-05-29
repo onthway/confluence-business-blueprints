@@ -1,0 +1,61 @@
+#main-bookmarklet {
+    background: #fff;
+    margin: 12px auto;
+    min-height: 120px;
+    width: 500px;
+    padding: 30px;
+    box-shadow: 0px 0px 5px 1px #ddd;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.bookmarklet-section h2 {
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+#bookmarklet-form .bookmarklet-space-container {
+    padding: 0;
+    position: relative;
+}
+
+#bookmarklet-form .bookmarklet-field-group {
+    padding-left: 100px;
+}
+
+#bookmarklet-form .bookmarklet-form-buttons {
+    padding-top: 12px;
+}
+
+#bookmarklet-form .bookmarklet-text {
+    max-width: 360px;
+}
+
+.bookmarklet-result-buttons {
+    padding-left: 60px;
+    padding-top: 20px;
+}
+
+div.bookmarklet-close {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.bookmarklet-result-text {
+    padding-left: 30px;
+}
+
+#main-bookmarklet .loading-data {
+    position: absolute;
+    left: 48%;
+}
+
+.bookmarklet-message {
+    overflow: hidden;
+}
+
+.users-dropdown {
+    max-width: none;
+}

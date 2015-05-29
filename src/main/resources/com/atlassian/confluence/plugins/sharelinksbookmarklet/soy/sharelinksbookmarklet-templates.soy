@@ -1,0 +1,45 @@
+{namespace Confluence.Blueprints.SharelinksBookmarklet}
+
+/**
+ * Render no matches space result
+ *
+ */
+{template .spaceNoMatches}
+    {getText('bookmarklet.space.search.no.matches')}
+{/template}
+
+/**
+ * Renders success result when share link from bookmarklet page
+ *
+ * @param pageResultUrl
+ */
+{template .bookmarkletShareSuccess}
+
+    <div class="bookmarklet-result-text">
+        {getText('bookmarklet.page.created', $pageResultUrl)|noAutoescape}
+    </div>
+    <div class="bookmarklet-result-buttons">
+        <button id="bookmarklet-close-button" class="aui-button aui-style aui-button-primary">{getText('bookmarklet.page.close')}</button>
+    </div>
+    
+{/template}
+
+/**
+ * Renders error message
+ * @param errorMessage
+ */
+{template .bookmarkletShareError}
+    <div class="aui-message warning bookmarklet-message">
+        <span class="aui-icon icon-warning"></span>
+        {$errorMessage|noAutoescape}
+    </div>
+{/template}
+
+/**
+ * Renders space in the select space control
+ *
+ * @param spaceName
+ */
+{template .displaySpace}
+    <span>{$spaceName}</span>
+{/template}

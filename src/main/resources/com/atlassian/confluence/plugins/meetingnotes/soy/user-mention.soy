@@ -1,0 +1,14 @@
+{namespace Confluence.Templates.Meeting.Notes}
+
+/**
+ * Render a username link in a template.
+ * @param? username
+ */
+{template .userMention}
+    {if $username}
+        <li><p><ac:link><ri:user ri:username="{$username}" /></ac:link></p></li>
+        <li><p><ac:placeholder ac:type="mention">{getText('meeting.notes.blueprint.template.attendees.placeholder')}</ac:placeholder></p></li>
+    {else}
+        <li><p><ac:placeholder ac:type="mention">{getText('meeting.notes.blueprint.template.attendees.placeholder')}</ac:placeholder></p></li>
+    {/if}
+{/template}

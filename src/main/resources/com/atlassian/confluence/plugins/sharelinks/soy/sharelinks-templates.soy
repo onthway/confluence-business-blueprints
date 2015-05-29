@@ -1,0 +1,304 @@
+{namespace Confluence.Blueprints.Sharelinks}
+
+/**
+ * Dialog form template
+ */
+{template .dialogForm}
+    <form action="#" method="post" id="sharelinks-form" class="aui">
+        <fieldset>
+            <div class="field-group">
+            <label for="sharelinks-url">{getText('sharelinks.blueprint.wizard.form.label.url')}<span class="aui-icon icon-required"> required</span></label>
+            <input id="sharelinks-url" class="text long-field" type="text" name="url" placeholder="{getText('sharelinks.blueprint.wizard.form.label.url.placeholder')}"/>
+            <div class="error"></div>
+        </div>
+        <div class="field-group">
+            <label for="sharelinks-title">{getText('sharelinks.blueprint.wizard.form.label.name')}<span class="aui-icon icon-required"> required</span></label>
+            <input id="sharelinks-title" class="text long-field" type="text" name="title" title="title" placeholder="{getText('sharelinks.blueprint.wizard.form.label.name.placeholder')}" maxlength="255">
+            <div class="error"></div>
+        </div>
+        <div class="field-group">
+            <label for="sharelinks-label">{getText('sharelinks.blueprint.wizard.form.label.label')}</label>
+            <input id="sharelinks-label" class="text select2-input long-field" type="text" name="label"
+                placeholder="{getText('sharelinks.blueprint.wizard.form.label.label.placeholder')}" />
+        </div>
+        <div class="field-group">
+            <label for="sharelinks-sharewith">{getText('sharelinks.blueprint.wizard.form.label.sharewith')}</label>
+            <input id="sharelinks-sharewith" class="text long-field autocomplete-multiuser" type="text" name="sharewith" placeholder="{getText('sharelinks.blueprint.wizard.form.label.sharewith.placeholder')}"/>
+        </div>
+        <div class="field-group">
+            <label for="sharelinks-comment">{getText('sharelinks.blueprint.wizard.form.label.comment')}</label>
+            <textarea id="sharelinks-comment" class="textarea long-field" rows="4" type="text" name="comment" placeholder="{getText('sharelinks.blueprint.wizard.form.label.comment.placeholder')}"></textarea>
+            </div>
+        </fieldset>
+    </form>
+{/template}
+
+/**
+ * Renders preview link
+ * @param linkMetaData
+ */
+{template .previewLink}
+    <div class="sharelinks-preview">
+    {if ($linkMetaData.title)}
+        <h3 class="sharelinks-preview-title">
+            {$linkMetaData.title}
+        </h3>
+        {if ($linkMetaData.imageURL)}
+            <div class="sharelinks-preview-image">
+                <img src="{$linkMetaData.imageURL}"/>
+            </div>
+        {else}
+            {let $noImagePreviewContent}
+                {call .noImagePreview}
+                {/call}
+            {/let}
+            {$noImagePreviewContent|noAutoescape}
+        {/if}
+        {if ($linkMetaData.description)}
+            <p>{$linkMetaData.description}</p>
+        {/if}
+    {else}
+        {let $previewUnavailableContent}
+            {call .previewUnavailable}
+            {/call}
+        {/let}
+        {$previewUnavailableContent|noAutoescape}
+    {/if}
+    </div>
+{/template}
+
+/**
+ * Renders preview link with video
+ * @param linkMetaData
+ */
+{template .previewVideoLink}
+    <div class="sharelinks-preview">
+        <h3 class="sharelinks-preview-title">
+            {$linkMetaData.title}
+        </h3>
+        <div class="sharelinks-preview-video">
+            {if ($linkMetaData.imageURL)}
+                <span class="sharelinks-preview-image">
+                    <img src="{$linkMetaData.imageURL}"/>
+                    <span class="sharelinks-preview-camera-icon sharelinks-camera-with-image"></span>
+                </span>
+            {else}
+                <div>
+                    {let $noImagePreviewContent}
+                        {call .noImagePreview}
+                        {/call}
+                    {/let}
+                    {$noImagePreviewContent|noAutoescape}
+                    <span class="sharelinks-preview-camera-icon sharelinks-camera-with-no-image"></span>
+                </div>
+            {/if}
+        </div>
+        {if ($linkMetaData.description)}
+            <p>{$linkMetaData.description}</p>
+        {/if}
+    </div>
+{/template}
+
+/**
+ * Renders loading preview
+ */
+{template .previewLoading}
+    <div class="sharelinks-preview-loading">
+        <span class="aui-icon aui-icon-wait"></span>&nbsp;{getText('sharelinks.blueprint.wizard.preview.loading')}
+    </div>
+{/template}
+
+/**
+ * Renders meta data in page for share link
+ * @param linkMetaData
+ * @param faviconURL
+ * @param descriptionMessage
+ */
+{template .metaDataHtml}
+    <div class="sharelinks-link-meta-data">
+        <ac:macro ac:name="panel">
+            <ac:rich-text-body>
+                {if ($linkMetaData.imageURL)}
+                    <h3>
+                        <ac:image ac:align="right">
+                            <ri:url ri:value='{$linkMetaData.imageURL}' />
+                        </ac:image>
+                    </h3>
+                {/if}
+                <p>
+                    <ac:image ac:width='16'>
+                        <ri:url ri:value="{$faviconURL}" />
+                    </ac:image>&nbsp;
+                    <a href="{$linkMetaData.sourceURL}">{$linkMetaData.excerptedURL}</a>
+                </p>
+                {if ($linkMetaData.description)}
+                <blockquote>
+                    <p>{$descriptionMessage}</p>
+                </blockquote>
+                {else}
+                <p style="text-align: left;">
+                    <span style="color: rgb(128,128,128);"><em>{$descriptionMessage}</em></span>
+                </p>
+                {/if}
+                <p>
+                    <strong><a href="{$linkMetaData.sourceURL}">{getText('sharelinks.blueprint.page.label.openlink')}</a></strong>
+                </p>
+            </ac:rich-text-body>
+        </ac:macro>
+    </div>
+{/template}
+
+/**
+ * Renders error message
+ */
+{template .previewError}
+    <div class="sharelinks-preview">
+        {let $previewUnavailableContent}
+            {call .previewUnavailable}
+            {/call}
+        {/let}
+        {$previewUnavailableContent|noAutoescape}
+    </div>
+{/template}
+
+/**
+ * Renders video meta data in page for share link
+ * @param linkMetaData
+ * @param faviconURL
+ * @param isSupportedMediaDomain
+ */
+{template .videoMetaDataHtml}
+    <ac:macro ac:name="panel">
+        <ac:rich-text-body>
+            <ac:macro ac:name="section">
+                <ac:rich-text-body>
+                    <ac:macro ac:name="column">
+                        <ac:parameter ac:name="width">50%</ac:parameter>
+                        <ac:rich-text-body>
+                            <p>
+                                <ac:image ac:width='16'>
+                                    <ri:url ri:value="{$faviconURL}" />
+                                </ac:image>&nbsp;
+                                <a href="{$linkMetaData.sourceURL}">{$linkMetaData.excerptedURL}</a>
+                            </p>
+                            {if ($linkMetaData.description)}
+                                <blockquote>
+                                    <p>{$linkMetaData.description}</p>
+                                </blockquote>
+                            {/if}
+                            <p>
+                                <strong><a href="{$linkMetaData.sourceURL}">{getText('sharelinks.blueprint.page.label.openlink')}</a></strong>
+                            </p>
+                        </ac:rich-text-body>
+                    </ac:macro>
+                    <ac:macro ac:name="column">
+                        <ac:parameter ac:name="width">50%</ac:parameter>
+                        <ac:rich-text-body>
+                            <p>
+                                {if $isSupportedMediaDomain}
+                                    <ac:macro ac:name="widget">
+                                        <ac:parameter ac:name="url">{$linkMetaData.sourceURL}</ac:parameter>
+                                        <ac:parameter ac:name="width">350</ac:parameter>
+                                        <ac:parameter ac:name="height">240</ac:parameter>
+                                    </ac:macro>
+                                {else}
+                                    <ac:image ac:width="300">
+                                        <ri:url ri:value="{$linkMetaData.imageURL}" />
+                                    </ac:image>
+                                {/if}
+                            </p>
+                        </ac:rich-text-body>
+                    </ac:macro>
+                </ac:rich-text-body>
+            </ac:macro>
+        </ac:rich-text-body>
+    </ac:macro>
+{/template}
+
+/**
+ * Renders twitter meta data in page for share link
+ * @param linkMetaData
+ * @param faviconURL
+ */
+{template .twitterMetaDataHtml}
+    {if ($linkMetaData.description)}
+        <div class="sharelinks-twitter-content">
+            <p>
+                <ac:image ac:width='16'>
+                    <ri:url ri:value="{$faviconURL}" />
+                </ac:image>&nbsp;
+                <a href="{$linkMetaData.sourceURL}">{$linkMetaData.excerptedURL}</a>
+            </p>
+            <p> 
+                <ac:macro ac:name="widget">
+                    <ac:parameter ac:name="url">{$linkMetaData.sourceURL}</ac:parameter>
+                </ac:macro>
+            </p>
+            <p>
+                <strong><a href="{$linkMetaData.sourceURL}">{getText('sharelinks.blueprint.page.label.openlink')}</a></strong>
+            </p>
+        </div>
+    {else}
+        {call .metaDataHtml}
+            {param linkMetaData: $linkMetaData/}
+            {param faviconURL: $faviconURL/}
+        {/call}
+    {/if}
+{/template}
+
+/**
+ * Render bookmarklet guide on wizard
+ * @param bookmarkletActionURL
+ */
+{template .bookmarkletGuideOnWizard}
+    {let $bookmarkletLinkParam}
+        {call Confluence.Blueprints.SharelinksUrlMacro.bookmarkletLink}
+            {param bookmarkletActionURL: $bookmarkletActionURL/}
+        {/call}
+    {/let}
+    <p>
+        {$bookmarkletLinkParam|noAutoescape}
+    </p>
+    <p>
+        {getText('bookmarklet.wizard.guide')}
+    </p>
+    <div class="bookmarklet-guide-picture"></div>
+{/template}
+
+/**
+ * Render bookmarklet guide on sharelinks index page
+ */
+{template .bookmarkletGuide}
+    {let $bookmarkletMacroParam}
+        <ac:macro ac:name="sharelinks-urlmacro"/>
+    {/let}
+    <ac:macro ac:name="info">
+        <ac:parameter ac:name="icon">false</ac:parameter>
+        <ac:rich-text-body>
+            <p>
+                <ac:emoticon ac:name="information" />&nbsp; 
+                {getText('bookmarklet.index.page.guide', $bookmarkletMacroParam)|noAutoescape}
+            </p>
+        </ac:rich-text-body>
+    </ac:macro>
+{/template}
+
+/**
+ * Render preview no image available
+ */
+{template .noImagePreview}
+    <p class="image-unavailable">
+        <span class="no-image-picture"></span>
+        {getText('sharelinks.blueprint.wizard.preview.image.unavailable')}
+    </p>
+{/template}
+
+/**
+ * Render link preview unavailable
+ */
+{template .previewUnavailable}
+    <p class="link-unavailable">
+        <span class="preview-unavailable-picture"></span>
+        {getText('sharelinks.blueprint.wizard.preview.error')}
+    </p>
+{/template}

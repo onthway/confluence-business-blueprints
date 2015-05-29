@@ -1,0 +1,32 @@
+<ac:layout>
+    <ac:layout-section ac:type="two_right_sidebar">
+        <ac:layout-cell>
+            <ac:macro ac:name="details">
+                <ac:parameter ac:name="hidden">true</ac:parameter>
+                <ac:parameter ac:name="label"><at:var at:name="templateLabel" /></ac:parameter>
+                <ac:rich-text-body>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th><at:i18n at:key="sharelinks.template.link.heading" /></th>
+                                <td>
+                                    <at:var at:name="faviconImg" at:rawxhtml="true" />
+                                    <at:var at:name="htmlLink" at:rawxhtml="true" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><at:i18n at:key="sharelinks.template.date.heading" /></th>
+                                <td><at:var at:name="createdDate"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ac:rich-text-body>
+            </ac:macro>
+            <at:var at:name="linkMetaDataHtml" at:rawxhtml="true"/>
+            <p>&nbsp;</p>
+        </ac:layout-cell>
+        <ac:layout-cell>
+            <p>&nbsp;</p>
+        </ac:layout-cell>
+    </ac:layout-section>
+</ac:layout>

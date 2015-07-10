@@ -33,6 +33,7 @@ public class MeetingNotesContextProvider extends AbstractBlueprintContextProvide
     public MeetingNotesContextProvider(LocaleManager localeManager, I18NBeanFactory i18NBeanFactory,
             TemplateRenderer templateRenderer, BusinessBlueprintsContextProviderHelper helper)
     {
+        //commit
         this.localeManager = localeManager;
         this.i18NBeanFactory = i18NBeanFactory;
         this.templateRenderer = templateRenderer;

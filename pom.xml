@@ -177,7 +177,7 @@
         <context.confluence.path>confluence</context.confluence.path>
         <baseurl.confluence>http://localhost:${http.confluence.port}/${context.confluence.path}</baseurl.confluence>
 
-        <!-- Once a 5.8.1 is released, we should depend on that -->
+        <!-- Once a 5.8.1 is released, we should depend on that test -->
         <failOnMilestoneOrReleaseCandidateDeps>false</failOnMilestoneOrReleaseCandidateDeps>
     </properties>
 
